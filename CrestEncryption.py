@@ -18,38 +18,17 @@ def paste():
 def brute_force_output():
     OutputText.delete(1.0, END)
     message = (ciphertextEntry.get()).upper()  # encrypted message
-    LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-    #if no shift is entered
-    if ShiftEntry.get() == '':
-        for key in range(len(LETTERS)):
-             translated = ''
-             for symbol in message:
-                 if symbol in LETTERS:
-                    num = LETTERS.find(symbol)
-                    num = num - key
-                    if num < 0:
-                        num = num + len(LETTERS)
-                        translated = translated + LETTERS[num]
-                    else:
-                        translated = translated + symbol
-             OutputString = str('SHIFT -%s: %s \n' % (key, translated))
-             OutputText.insert(END, OutputString)
-
-    #if a shift is entered
-    else:
-        translated = ''
-        for symbol in message:
-            if symbol in LETTERS:
-                num = LETTERS.find(symbol)
-                key = int(ShiftEntry.get())
-                num = num - key
-                if num < 0:
-                    num = num + len(LETTERS)
-                    translated = translated + LETTERS[num]
-                else:
-                    translated = translated + symbol
-        OutputString = str('SHIFT -%s: %s \n' % (key, translated))
+    for n in range(1,26):
+        result = ''
+        for l in message:
+            try:
+                i = (key.index(l) + n) % 26
+                result += key[i]
+            except ValueError:
+                result += l
+        OutputString = str('SHIFT -%s: %s \n' % (n, result))
         OutputText.insert(END, OutputString)
 
 
@@ -58,12 +37,6 @@ ciphertext_label = Label(root, text='ENTER CIPHER TEXT:', bg="gray13", fg="green
 ciphertext_label.grid(row=1, column=1, pady=(10, 0), padx=(20, 0), sticky="W")
 ciphertextEntry = Entry(root, bg="gray25", fg="green2", width="30")
 ciphertextEntry.grid(row=2, column=1, pady=(0, 0), padx=(20, 0))
-
-#allow user to enter the shift if they know it
-shiftlabel = Label(root, text='NEGATIVE SHIFT (IF KNOWN):', bg="gray13", fg="green2")
-shiftlabel.grid(row=4, column=1, pady=(10, 0), padx=(20, 0), sticky="W")
-ShiftEntry = Entry(root, bg="gray25", fg="green2", width="30")
-ShiftEntry.grid(row=5, column=1, padx=(20, 0))
 
 # creating decrypt button to produce the output
 decrypt = Button(root, text="DECRYPT", bg="red", fg="white", width="15", command=brute_force_output)
