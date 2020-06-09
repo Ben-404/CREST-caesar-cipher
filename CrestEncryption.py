@@ -28,7 +28,7 @@ def brute_force_output():
                 result += key[i]
             except ValueError:
                 result += l
-        OutputString = str('SHIFT -%s: %s \n' % (n, result))
+        OutputString = str('SHIFT +%s: %s \n' % (n, result))
         OutputText.insert(END, OutputString)
 
 
@@ -50,9 +50,8 @@ paste.grid(row=3, column=1, pady=(10, 0), padx=(20, 0), sticky = "E")
 Inst = Label(root, text=""
                                     "Instructions:"
                                     "\n\n1. Enter or paste cipher text \nabove"
-                        "\n\n2. If you know the shift\nenter it. If not, leave blank"
-                        "\n\n3. Press the decrypt button"
-                        "\n\n4. Your decrypted text will\nappear on the right", bg="gray13", fg="light blue")
+                        "\n\n2. Press the decrypt button"
+                        "\n\n3. Your decrypted text will\nappear on the right", bg="gray13", fg="light blue")
 Inst.grid(row=6, column=1, pady=(10, 0))
 
 #Output
